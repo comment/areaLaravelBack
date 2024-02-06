@@ -2,6 +2,7 @@
 
 namespace App\v1\Http\Controllers;
 
+use App\v1\Models\Image;
 use App\v1\Models\Item;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -241,7 +242,7 @@ class ItemController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/items/{id}",
+     *     path="/items/{id}/uploadImage",
      *     operationId="uploadImages",
      *     summary="uploadImages",
      *     tags={"Items"},
@@ -266,6 +267,7 @@ class ItemController extends Controller
      */
     public function uploadImage(Request $request, $itemId): Application|\Illuminate\Http\Response|JsonResponse|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
+
         try {
             $item = Item::find($itemId);
             if ($item === null) {
@@ -274,11 +276,21 @@ class ItemController extends Controller
 
             $arrFilesNameResponse = array();
             if($request->hasFile('image')) {
-                foreach ($request->file('image') as $index=>$file) {
+                foreach ($request->file('image') as $file) {
                     $originalName = $file->getClientOriginalName();
                     $arrOriginalName = explode('.', $originalName);
-                    $newName = $itemId . '_' . $index+1 . '.' . $arrOriginalName[1];
+
+                    $randomString = md5(uniqid(rand(), true));
+                    $randomString = substr($randomString, 0, 10);
+
+                    $newName = $randomString . '.' . $arrOriginalName[1];
                     $file->move(public_path() . '/storage/images/', $newName);
+
+                    $image = new Image();
+                    $image->item_id = $itemId;
+                    $image->filename = $newName;
+                    $image->save();
+
                     $arrFilesNameResponse[] = $newName;
                 }
             }

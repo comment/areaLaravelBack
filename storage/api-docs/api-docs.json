@@ -518,18 +518,18 @@
                     }
                 }
             },
-            "post": {
+            "delete": {
                 "tags": [
                     "Items"
                 ],
-                "summary": "uploadImages",
-                "description": "add image to item",
-                "operationId": "uploadImages",
+                "summary": "Delete a item",
+                "description": "Delete item from DB",
+                "operationId": "deleteItem",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "adding image to item",
+                        "description": "id that to be updated isDeleted = 1",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -557,19 +557,21 @@
                         }
                     }
                 }
-            },
-            "delete": {
+            }
+        },
+        "/items/{id}/uploadImage": {
+            "post": {
                 "tags": [
                     "Items"
                 ],
-                "summary": "Delete a item",
-                "description": "Delete item from DB",
-                "operationId": "deleteItem",
+                "summary": "uploadImages",
+                "description": "add image to item",
+                "operationId": "uploadImages",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id that to be updated isDeleted = 1",
+                        "description": "adding image to item",
                         "required": true,
                         "schema": {
                             "type": "integer"
