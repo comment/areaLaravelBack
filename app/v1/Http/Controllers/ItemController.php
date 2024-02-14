@@ -53,7 +53,7 @@ class ItemController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -86,13 +86,13 @@ class ItemController extends Controller
         try {
             $item = Item::find($id);
             if ($item === null) {
-                return response([], 404);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -129,13 +129,13 @@ class ItemController extends Controller
         try {
             $item = Item::create($request->all());
             if (!$item) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -177,14 +177,14 @@ class ItemController extends Controller
         try {
             $item = Item::find($id);
             if ($item === null) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
             $item->update($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -223,7 +223,7 @@ class ItemController extends Controller
         try {
             $item = Item::find($id);
             if ($item === null) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
             $item->isDeleted = 1;
             $item->save();
@@ -231,7 +231,7 @@ class ItemController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -271,7 +271,7 @@ class ItemController extends Controller
         try {
             $item = Item::find($itemId);
             if ($item === null) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
 
             $arrFilesNameResponse = array();
@@ -298,7 +298,7 @@ class ItemController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([

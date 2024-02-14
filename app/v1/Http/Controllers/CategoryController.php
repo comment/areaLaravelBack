@@ -56,7 +56,7 @@ class CategoryController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -89,13 +89,13 @@ class CategoryController extends Controller
         try {
             $category = Category::find($id);
             if ($category === null) {
-                return response([], 404);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -133,13 +133,13 @@ class CategoryController extends Controller
         try {
             $category = Category::create($request->all());
             if (!$category) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -182,14 +182,14 @@ class CategoryController extends Controller
         try {
             $category = Category::find($id);
             if ($category === null) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
             $category->update($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
@@ -228,7 +228,7 @@ class CategoryController extends Controller
         try {
             $category = Category::find($id);
             if ($category === null) {
-                return response([], 400);
+                return response([], Response::HTTP_BAD_REQUEST);
             }
             $category->isDeleted = 1;
             $category->save();
@@ -236,7 +236,7 @@ class CategoryController extends Controller
             return response()->json([
                 'data' => [],
                 'message' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return response()->json([
