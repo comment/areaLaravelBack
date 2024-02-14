@@ -33,7 +33,7 @@ class SendRegistrationEmail implements ShouldQueue
             $message
                 ->to($email)
                 ->subject('Hello, world!')
-                ->setBody('Welcome to the application!');
+                ->html('Welcome to the application!');
         });
     }
 }
